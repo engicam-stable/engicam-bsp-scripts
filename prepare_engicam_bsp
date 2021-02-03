@@ -1,0 +1,87 @@
+#!/usr/bin/python
+
+import sys,os 
+import shutil
+
+from collections import defaultdict
+
+distro_dic = {}
+docker_dic = {}
+
+def fill_dictionary():
+	global distro_dic
+	global docker_dic
+
+	distro_dic = defaultdict(dict)
+	distro_dic['nxp']['zeus']="https://github.com/engicam-stable/engicam-bsp-release.git -b zeus -m engicam-bsp-release.xml"
+	distro_dic['nxp']['zeus-2.3']="https://github.com/engicam-stable/engicam-bsp-release.git -b zeus-nxp -m engicam-bsp-release.xml"
+
+	docker_dic['zeus']="ubuntu18"
+	docker_dic['zeus-2.3']="ubuntu18"
+
+def print_usage():
+	print ("Usage:\n%s <SOC vendor> <yocto version>\n" % (sys.argv[0]))
+	print ("es.\n\n %s nxp zeus "% (sys.argv[0]))
+	print_available()
+	quit()
+
+def print_available():
+	global distro_dic
+	print("Combination available:")
+	for vendor in distro_dic.keys():		
+		print("\nVendor %s:\n"%vendor)
+		for yocto in distro_dic[vendor].keys():		
+  			print(yocto)
+
+def clone_sources(mvendor,yversion):
+	global distro_dic
+	global docker_dic
+	
+	try:
+		repofiles=distro_dic[mvendor][yversion]
+	except:
+		print_available()
+		exit()
+	
+	try:
+		ubuntuname=docker_dic[yversion]
+	except:
+		print("error on docker_dic")
+		exit()
+
+	path=mvendor + "_" + yversion
+
+
+	containername="ubuntu_" + ubuntuname
+
+	try:
+		os.mkdir(path)
+	except OSError:
+		print ("the directory %s already exist" % path)		
+		os.chdir(path)
+	else:
+		print ("Successfully created the directory %s " % path)
+		shutil.copy("dockerfiles/Dockerfile_" + ubuntuname, path + "/Dockerfile")
+		os.chdir(path)
+		os.system("repo init -u " + repofiles)
+		os.system("repo sync")	
+		os.system("sudo docker build -t " + containername +" .")
+	
+	os.system("sudo docker run -v ${PWD}:/yocto -ti " + containername)
+
+
+def main():
+
+	fill_dictionary()    
+
+	if len(sys.argv) != 3:
+		print_usage()
+		quit()
+
+	vendor=sys.argv[1]
+	yoctoversion=sys.argv[2]
+	
+	clone_sources(vendor,yoctoversion)
+
+if __name__ == "__main__":
+    main()
