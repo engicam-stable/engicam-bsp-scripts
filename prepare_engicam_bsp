@@ -51,7 +51,6 @@ def clone_sources(mvendor,yversion):
 
 	path=mvendor + "_" + yversion
 
-
 	containername="ubuntu_" + ubuntuname
 
 	try:
@@ -61,14 +60,27 @@ def clone_sources(mvendor,yversion):
 		os.chdir(path)
 	else:
 		print ("Successfully created the directory %s " % path)
-		shutil.copy("dockerfiles/Dockerfile_" + ubuntuname, path + "/Dockerfile")
 		os.chdir(path)
 		os.system("repo init -u " + repofiles)
 		os.system("repo sync")	
+		
+	os.chdir("..")
+	cur_path = os.getcwd() + "/" + path
+	docker_path = "dockerfiles/"+path
+	try:
+		os.mkdir(docker_path)
+	except OSError:
+		print ("the directory %s already exist" % docker_path)		
+                print(path)
+                os.chdir(docker_path)
+	else:
+		print ("Successfully created the directory %s " % docker_path)
+		os.chdir(docker_path)
+		shutil.copy("../Dockerfile_" + ubuntuname, "Dockerfile")	
+		
 		os.system("sudo docker build -t " + containername +" .")
 	
-	os.system("sudo docker run -v ${PWD}:/yocto -ti " + containername)
-
+	os.system("sudo docker run -v %s:/yocto -v/lib/modules/:/lib/modules -v/usr/src/:/usr/src  -ti " % (cur_path) + containername)
 
 def main():
 

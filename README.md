@@ -9,7 +9,7 @@ Update the apt package index and install packages to allow apt to use a reposito
     $ sudo apt-get update
 
     $ sudo apt-get install apt-transport-https ca-certificates \
-        curl gnupg-agent software-properties-common
+        curl gnupg-agent software-properties-common linux-generic
 
 Add Docker’s official GPG key:
 
