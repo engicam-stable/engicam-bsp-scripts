@@ -35,7 +35,20 @@ Install Docker Engine:
     $ sudo apt-get install docker-ce docker-ce-cli containerd.io
 
 
-## first build
+## First build
+
+Clone the repository:
+
+    $ git clone https://github.com/engicam-stable/engicam-bsp-scripts.git
+
+Launch the script to prepare the environment:
+
+    $ cd ~/engicam-bsp-scripts
+    $ ./prepare_engicam_bsp --help
+
+Ex:
+
+    $ ./prepare_engicam_bsp nxp zeus-2.3
 
 at the end of procedure under /yocto folder you can found all source code.
 

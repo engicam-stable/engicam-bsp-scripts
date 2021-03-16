@@ -78,7 +78,7 @@ def clone_sources(mvendor,yversion):
 		os.chdir(docker_path)
 		shutil.copy("../Dockerfile_" + ubuntuname, "Dockerfile")	
 		
-		os.system("sudo docker build -t " + containername +" .")
+		os.system("sudo docker build --build-arg UID=$(id -u) -t " + containername +" .")
 	
 	os.system("sudo docker run -v %s:/yocto -v/lib/modules/:/lib/modules -v/usr/src/:/usr/src  -ti " % (cur_path) + containername)
 
