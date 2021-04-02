@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys,os 
+import sys,os
 import shutil
 
 from collections import defaultdict
@@ -15,9 +15,11 @@ def fill_dictionary():
 	distro_dic = defaultdict(dict)
 	distro_dic['nxp']['zeus']="https://github.com/engicam-stable/engicam-bsp-release.git -b zeus -m engicam-bsp-release.xml"
 	distro_dic['nxp']['zeus-2.3']="https://github.com/engicam-stable/engicam-bsp-release.git -b zeus-nxp -m engicam-bsp-release.xml"
+	distro_dic['st']['dunfell']="https://github.com/engicam-stable/engicam-bsp-release.git -b dunfell -m engicam-bsp-release.xml"
 
 	docker_dic['zeus']="ubuntu18"
 	docker_dic['zeus-2.3']="ubuntu18"
+	docker_dic['dunfell']="ubuntu18"
 
 def print_usage():
 	print ("Usage:\n%s <SOC vendor> <yocto version>\n" % (sys.argv[0]))
@@ -28,21 +30,21 @@ def print_usage():
 def print_available():
 	global distro_dic
 	print("Combination available:")
-	for vendor in distro_dic.keys():		
+	for vendor in distro_dic.keys():
 		print("\nVendor %s:\n"%vendor)
-		for yocto in distro_dic[vendor].keys():		
+		for yocto in distro_dic[vendor].keys():
   			print(yocto)
 
 def clone_sources(mvendor,yversion):
 	global distro_dic
 	global docker_dic
-	
+
 	try:
 		repofiles=distro_dic[mvendor][yversion]
 	except:
 		print_available()
 		exit()
-	
+
 	try:
 		ubuntuname=docker_dic[yversion]
 	except:
@@ -56,35 +58,35 @@ def clone_sources(mvendor,yversion):
 	try:
 		os.mkdir(path)
 	except OSError:
-		print ("the directory %s already exist" % path)		
+		print ("the directory %s already exist" % path)
 		os.chdir(path)
 	else:
 		print ("Successfully created the directory %s " % path)
 		os.chdir(path)
 		os.system("repo init -u " + repofiles)
-		os.system("repo sync")	
-		
+		os.system("repo sync")
+
 	os.chdir("..")
 	cur_path = os.getcwd() + "/" + path
 	docker_path = "dockerfiles/"+path
 	try:
 		os.mkdir(docker_path)
 	except OSError:
-		print ("the directory %s already exist" % docker_path)		
-                print(path)
-                os.chdir(docker_path)
+		print ("the directory %s already exist" % docker_path)
+		print(path)
+		os.chdir(docker_path)
 	else:
 		print ("Successfully created the directory %s " % docker_path)
 		os.chdir(docker_path)
-		shutil.copy("../Dockerfile_" + ubuntuname, "Dockerfile")	
-		
+		shutil.copy("../Dockerfile_" + ubuntuname, "Dockerfile")
+
 		os.system("sudo docker build --build-arg UID=$(id -u) -t " + containername +" .")
-	
+
 	os.system("sudo docker run -v %s:/yocto -v/lib/modules/:/lib/modules -v/usr/src/:/usr/src  -ti " % (cur_path) + containername)
 
 def main():
 
-	fill_dictionary()    
+	fill_dictionary()
 
 	if len(sys.argv) != 3:
 		print_usage()
@@ -92,7 +94,7 @@ def main():
 
 	vendor=sys.argv[1]
 	yoctoversion=sys.argv[2]
-	
+
 	clone_sources(vendor,yoctoversion)
 
 if __name__ == "__main__":
