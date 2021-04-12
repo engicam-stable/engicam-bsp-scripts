@@ -16,10 +16,12 @@ def fill_dictionary():
 	distro_dic['nxp']['zeus']="https://github.com/engicam-stable/engicam-bsp-release.git -b zeus -m engicam-bsp-release.xml"
 	distro_dic['nxp']['zeus-2.3']="https://github.com/engicam-stable/engicam-bsp-release.git -b zeus-nxp -m engicam-bsp-release.xml"
 	distro_dic['st']['dunfell']="https://github.com/engicam-stable/engicam-bsp-release.git -b dunfell -m engicam-bsp-release.xml"
+	distro_dic['nxp']['gatesgarth']="https://github.com/engicam-stable/engicam-bsp-release.git -b gatesgarth-nxp -m engicam-bsp-release.xml"
 
 	docker_dic['zeus']="ubuntu18"
 	docker_dic['zeus-2.3']="ubuntu18"
 	docker_dic['dunfell']="ubuntu18"
+	docker_dic['gatesgarth']="ubuntu18"
 
 def print_usage():
 	print ("Usage:\n%s <SOC vendor> <yocto version>\n" % (sys.argv[0]))
