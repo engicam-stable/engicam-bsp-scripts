@@ -60,12 +60,15 @@ environment:
 
 The next table will list all the available environments.
 
-| branch | version    |
-|--------|------------|
-| nxp    | zeus       |
-| nxp    | zeus-2.3   |
-| nxp    | gatesgarth |
-| st     | dunfell    |
+| branch | version              |
+|--------|----------------------|
+| nxp    | zeus                 |
+| nxp    | zeus-2.3             |
+| nxp    | gatesgarth           |
+| nxp    | hardknott            |
+| st     | dunfell              |
+| st     | dunfell-5.10_icore   |
+| st     | dunfell-5.10_ugea    |
 
 For example:
 
