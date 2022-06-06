@@ -29,7 +29,7 @@ def fill_dictionary():
 	docker_dic['dunfell-5.10_icore']="ubuntu18dunfell"	
 	docker_dic['gatesgarth']="ubuntu18"
 	docker_dic['hardknott']="ubuntu20"
-	docker_dic['honister']="ubuntu20"
+	docker_dic['honister']="ubuntu20honister"
 
 def print_usage():
 	print ("Usage:\n%s <SOC vendor> <yocto version>\n" % (sys.argv[0]))
@@ -86,7 +86,6 @@ def clone_sources(mvendor,yversion):
 		os.mkdir(docker_path)
 	except OSError:
 		print ("the directory %s already exist" % docker_path)
-		print(path)
 		os.chdir(docker_path)
 	else:
 		print ("Successfully created the directory %s " % docker_path)
