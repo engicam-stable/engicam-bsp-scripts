@@ -20,6 +20,7 @@ def fill_dictionary():
 	distro_dic['st']['dunfell-5.10_icore']="https://github.com/engicam-stable/engicam-bsp-release.git -b dunfell-st-5.10_icore -m engicam-bsp-release.xml"	
 	distro_dic['nxp']['gatesgarth']="https://github.com/engicam-stable/engicam-bsp-release.git -b gatesgarth-nxp -m engicam-bsp-release.xml"
 	distro_dic['nxp']['hardknott']="https://github.com/engicam-stable/engicam-bsp-release.git -b hardknott-nxp -m engicam-bsp-release.xml"
+	distro_dic['nxp']['honister']=" https://source.codeaurora.org/external/imx/imx-manifest -b imx-linux-honister -m imx-5.15.5-1.0.0.xml"
 
 	docker_dic['zeus']="ubuntu18"
 	docker_dic['zeus-2.3']="ubuntu18"
@@ -28,6 +29,7 @@ def fill_dictionary():
 	docker_dic['dunfell-5.10_icore']="ubuntu18dunfell"	
 	docker_dic['gatesgarth']="ubuntu18"
 	docker_dic['hardknott']="ubuntu20"
+	docker_dic['honister']="ubuntu20"
 
 def print_usage():
 	print ("Usage:\n%s <SOC vendor> <yocto version>\n" % (sys.argv[0]))
@@ -72,6 +74,9 @@ def clone_sources(mvendor,yversion):
 		print ("Successfully created the directory %s " % path)
 		os.chdir(path)
 		os.system("repo init -u " + repofiles)
+		if yversion == "honister":
+			os.system("sed -i '/^<\/manifest>.*/i <project name=\"meta-engicam-nxp\" path=\"sources\/meta-engicam-nxp\" remote= \"engicam\" revision=\"honister\"\/>' ./.repo/manifests/imx-5.15.5-1.0.0.xml")
+			os.system("sed -i '/^<manifest>.*/a <remote fetch=\"https:\/\/github.com\/engicam-stable\" name=\"engicam\" \/>' ./.repo/manifests/imx-5.15.5-1.0.0.xml")
 		os.system("repo sync")
 
 	os.chdir("..")
