@@ -1,23 +1,32 @@
-# ENGICAM BSP Script
+# Engicam BSP Script
 
-Install Docker Engine on Ubuntu
-===============================
+## Install repo on Ubuntu
 
-First things first: our script utilizes **Docker** in order to assure
-the compatibility between Yocto and Ubuntu versions.
+This script utilizes **repo** to download the correct source files.
+
+To install the repo utility:
+
+	mkdir -p ~/.bin
+	PATH="${HOME}/.bin:${PATH}"
+	curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
+	chmod a+rx ~/.bin/repo
+
+## Install Docker Engine on Ubuntu
+
+This script utilizes **Docker** in order to assure the compatibility between Yocto and Ubuntu versions.
 
 To install **Docker** correctly you need to:
 
-**Setup the repository**
+### Setup the repository
 
 Update the apt package index and install the following packages to allow
 apt to use a repository over HTTPS:
 
-    sudo apt-get update
-    sudo apt-get install apt-transport-https ca-certificates \
-    curl gnupg-agent software-properties-common linux-generic
+	sudo apt-get update
+	sudo apt-get install apt-transport-https ca-certificates \
+	curl gnupg-agent software-properties-common linux-generic
 
-Add Docker\'s official GPG key:
+Add Docker's official GPG key:
 
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
@@ -44,8 +53,7 @@ Install Docker Engine:
     sudo apt-get update
     sudo apt-get install docker-ce docker-ce-cli containerd.io
 
-Download and use setup script
-=============================
+## Download and use setup script
 
 First you need to clone the git repository:
 
@@ -82,5 +90,5 @@ or:
 This procedure may take some time to complete. Once it\'s finished you
 can find all source code in the **/yocto** folder.
 
-**Note**: *to return to the same Docker environment you just need to
-relaunch the same command used to set it up the first time.*
+>**Note**: *to return to the same Docker environment you just need to
+>relaunch the same command used to set it up the first time.*
