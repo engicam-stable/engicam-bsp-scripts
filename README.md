@@ -74,6 +74,7 @@ The next table will list all the available environments.
 | nxp    | zeus-2.3             |
 | nxp    | gatesgarth           |
 | nxp    | hardknott            |
+| nxp    | honister             |
 | st     | dunfell              |
 | st     | dunfell-5.10_icore   |
 | st     | dunfell-5.10_ugea    |
