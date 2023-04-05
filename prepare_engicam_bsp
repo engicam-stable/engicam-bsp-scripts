@@ -20,7 +20,7 @@ def fill_dictionary():
 	distro_dic['st']['dunfell-5.10_icore']="https://github.com/engicam-stable/engicam-bsp-release.git -b dunfell-st-5.10_icore -m engicam-bsp-release.xml"	
 	distro_dic['nxp']['gatesgarth']="https://github.com/engicam-stable/engicam-bsp-release.git -b gatesgarth-nxp -m engicam-bsp-release.xml"
 	distro_dic['nxp']['hardknott']="https://github.com/engicam-stable/engicam-bsp-release.git -b hardknott-nxp -m engicam-bsp-release.xml"
-	distro_dic['nxp']['honister']=" https://source.codeaurora.org/external/imx/imx-manifest -b imx-linux-honister -m imx-5.15.5-1.0.0.xml"
+	distro_dic['nxp']['honister']="https://github.com/nxp-imx/imx-manifest -b imx-linux-honister -m imx-5.15.5-1.0.0.xml"
 	distro_dic['st']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone-st -m engicam-bsp-release.xml"
 
 	docker_dic['zeus']="ubuntu18"
@@ -75,6 +75,7 @@ def clone_sources(mvendor,yversion):
 	else:
 		print ("Successfully created the directory %s " % path)
 		os.chdir(path)
+		print(repofiles)
 		os.system("repo init -u " + repofiles)
 		if yversion == "honister":
 			os.system("sed -i '/^<\/manifest>.*/i <project name=\"meta-engicam-nxp\" path=\"sources\/meta-engicam-nxp\" remote= \"engicam\" revision=\"honister\"\/>' ./.repo/manifests/imx-5.15.5-1.0.0.xml")
