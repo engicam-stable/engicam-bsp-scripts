@@ -22,6 +22,7 @@ def fill_dictionary():
 	distro_dic['nxp']['hardknott']="https://github.com/engicam-stable/engicam-bsp-release.git -b hardknott-nxp -m engicam-bsp-release.xml"
 	distro_dic['nxp']['honister']="https://github.com/nxp-imx/imx-manifest -b imx-linux-honister -m imx-5.15.5-1.0.0.xml"
 	distro_dic['st']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone-st -m engicam-bsp-release.xml"
+	distro_dic['st']['kirkstone_22.11']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone_22.11-st -m engicam-bsp-release.xml"
 
 	docker_dic['zeus']="ubuntu18"
 	docker_dic['zeus-2.3']="ubuntu18"
@@ -32,6 +33,7 @@ def fill_dictionary():
 	docker_dic['hardknott']="ubuntu20"
 	docker_dic['honister']="ubuntu20honister"
 	docker_dic['kirkstone']="ubuntu18"
+	docker_dic['kirkstone_22.11']="ubuntu18"
 
 def print_usage():
 	print ("Usage:\n%s <SOC vendor> <yocto version>\n" % (sys.argv[0]))
