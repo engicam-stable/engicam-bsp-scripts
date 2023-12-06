@@ -76,6 +76,7 @@ The next table will list all the available environments.
 | nxp      | hardknott            |
 | nxp      | honister             |
 | nxp      | kirkstone            |
+| nxp      | langdale             |
 | st       | dunfell              |
 | st       | dunfell-5.10_icore   |
 | st       | dunfell-5.10_ugea    |
