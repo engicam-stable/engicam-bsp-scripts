@@ -23,6 +23,7 @@ def fill_dictionary():
 	distro_dic['nxp']['honister']="https://github.com/nxp-imx/imx-manifest -b imx-linux-honister -m imx-5.15.5-1.0.0.xml"
 	distro_dic['nxp']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone-nxp -m engicam-bsp-release.xml"
 	distro_dic['nxp']['langdale']="https://github.com/engicam-stable/engicam-bsp-release.git -b langdale-nxp -m engicam-bsp-release.xml"
+	distro_dic['nxp']['mickledore']="https://github.com/engicam-stable/engicam-bsp-release.git -b mickledore-nxp -m engicam-bsp-release.xml"
 #	distro_dic['st']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone-st -m engicam-bsp-release.xml"
 	distro_dic['st']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone_22.11-st -m engicam-bsp-release.xml"
 	distro_dic['rockchip']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone-rockchip -m engicam-bsp-release.xml"
@@ -38,6 +39,7 @@ def fill_dictionary():
 	docker_dic['nxp']['honister']="ubuntu20honister"
 	docker_dic['nxp']['kirkstone']="ubuntu20honister"
 	docker_dic['nxp']['langdale']="ubuntu20honister"
+	docker_dic['nxp']['mickledore']="ubuntu20mickledore"
 #	docker_dic['st']['kirkstone']="ubuntu18"
 	docker_dic['st']['kirkstone']="ubuntu18"
 	docker_dic['rockchip']['kirkstone']="ubuntu20rockchip"
@@ -84,8 +86,10 @@ def clone_sources(mvendor,yversion):
 	else:
 		print ("Successfully created the directory %s " % path)
 		os.chdir(path)
-
+		print(os.getcwd())
+		print(repofiles)
 		os.system("repo init -u " + repofiles)
+#		sys.exit()
 		if yversion == "honister":
 			os.system("sed -i '/^<\/manifest>.*/i <project name=\"meta-engicam-nxp\" path=\"sources\/meta-engicam-nxp\" remote= \"engicam\" revision=\"honister\"\/>' ./.repo/manifests/imx-5.15.5-1.0.0.xml")
 			os.system("sed -i '/^<manifest>.*/a <remote fetch=\"https:\/\/github.com\/engicam-stable\" name=\"engicam\" \/>' ./.repo/manifests/imx-5.15.5-1.0.0.xml")
@@ -93,6 +97,7 @@ def clone_sources(mvendor,yversion):
 
 	os.chdir("..")
 	cur_path = os.getcwd() + "/" + path
+	print(cur_path)
 	docker_path = "dockerfiles/"+path
 	try:
 		os.mkdir(docker_path)
