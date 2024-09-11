@@ -82,6 +82,7 @@ The next table will list all the available environments.
 | st       | dunfell-5.10_icore   |
 | st       | dunfell-5.10_ugea    |
 | st       | kirkstone            |
+| st       | mickledore           |
 | rockchip | kirkstone            |
 
 For example:
