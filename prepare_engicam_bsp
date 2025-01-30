@@ -24,8 +24,8 @@ def fill_dictionary():
 	distro_dic['nxp']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone-nxp -m engicam-bsp-release.xml"
 	distro_dic['nxp']['langdale']="https://github.com/engicam-stable/engicam-bsp-release.git -b langdale-nxp -m engicam-bsp-release.xml"
 	distro_dic['nxp']['mickledore']="https://github.com/engicam-stable/engicam-bsp-release.git -b mickledore-nxp -m engicam-bsp-release.xml"
+	distro_dic['nxp']['scarthgap']="https://github.com/engicam-stable/engicam-bsp-release.git -b scarthgap-nxp -m engicam-bsp-release.xml"
 	distro_dic['st']['mickledore']="https://github.com/engicam-stable/engicam-bsp-release.git -b mickledore_v24.06-st -m engicam-bsp-release.xml"
-#	distro_dic['st']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone-st -m engicam-bsp-release.xml"
 	distro_dic['st']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone_22.11-st -m engicam-bsp-release.xml"
 	distro_dic['rockchip']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone-rockchip -m engicam-bsp-release.xml"
 
@@ -33,18 +33,18 @@ def fill_dictionary():
 	docker_dic['nxp']['zeus']="ubuntu18"
 	docker_dic['nxp']['zeus-2.3']="ubuntu18"
 	docker_dic['st']['dunfell']="ubuntu18"
-	docker_dic['st']['dunfell-5.10_ugea']="ubuntu18dunfell"
-	docker_dic['dunfell-5.10_icore']="ubuntu18dunfell"	
+	docker_dic['st']['dunfell-5.10_ugea']="ubuntu18"
+	docker_dic['dunfell-5.10_icore']="ubuntu18"
 	docker_dic['nxp']['gatesgarth']="ubuntu18"
 	docker_dic['nxp']['hardknott']="ubuntu20"
-	docker_dic['nxp']['honister']="ubuntu20honister"
-	docker_dic['nxp']['kirkstone']="ubuntu20honister"
-	docker_dic['nxp']['langdale']="ubuntu20honister"
-	docker_dic['nxp']['mickledore']="ubuntu20mickledore"
-	docker_dic['st']['mickledore']="ubuntu20mickledore"
-#	docker_dic['st']['kirkstone']="ubuntu18"
+	docker_dic['nxp']['honister']="ubuntu20"
+	docker_dic['nxp']['kirkstone']="ubuntu20"
+	docker_dic['nxp']['langdale']="ubuntu20"
+	docker_dic['nxp']['mickledore']="ubuntu20"
+	docker_dic['nxp']['scarthgap']="ubuntu22"
+	docker_dic['st']['mickledore']="ubuntu20"
 	docker_dic['st']['kirkstone']="ubuntu18"
-	docker_dic['rockchip']['kirkstone']="ubuntu20rockchip"
+	docker_dic['rockchip']['kirkstone']="ubuntu20"
 
 def print_usage():
 	print ("Usage:\n%s <SOC vendor> <yocto version>\n" % (sys.argv[0]))
@@ -111,9 +111,9 @@ def clone_sources(mvendor,yversion):
 		os.chdir(docker_path)
 		shutil.copy("../Dockerfile_" + ubuntuname, "Dockerfile")
 
-		os.system("sudo docker build --build-arg UID=$(id -u) -t " + containername +" .")
+		os.system("sudo docker build --no-cache --build-arg userid=$(id -u) --build-arg groupid=$(id -g) --build-arg username=$(id -un) -t " + containername +" .")
 
-	os.system("sudo docker run -v %s:/yocto -v/lib/modules/:/lib/modules -v/usr/src/:/usr/src  -ti " % (cur_path) + containername)
+	os.system("sudo docker run --privileged -it -v %s:/yocto -ti " % (cur_path) + containername)
 
 def main():
 
