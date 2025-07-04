@@ -27,6 +27,7 @@ def fill_dictionary():
 	distro_dic['nxp']['scarthgap']="https://github.com/engicam-stable/engicam-bsp-release.git -b scarthgap-nxp -m engicam-bsp-release.xml"
 	distro_dic['st']['mickledore']="https://github.com/engicam-stable/engicam-bsp-release.git -b mickledore_v24.06-st -m engicam-bsp-release.xml"
 	distro_dic['st']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone_22.11-st -m engicam-bsp-release.xml"
+	distro_dic['st']['scarthgap']="https://github.com/engicam-stable/engicam-bsp-release.git -b scarthgap_v24.12-st -m engicam-bsp-release.xml"
 	distro_dic['rockchip']['kirkstone']="https://github.com/engicam-stable/engicam-bsp-release.git -b kirkstone-rockchip -m engicam-bsp-release.xml"
 
 	docker_dic = defaultdict(dict)
@@ -44,6 +45,7 @@ def fill_dictionary():
 	docker_dic['nxp']['scarthgap']="ubuntu22"
 	docker_dic['st']['mickledore']="ubuntu20"
 	docker_dic['st']['kirkstone']="ubuntu18"
+	docker_dic['st']['scarthgap']="ubuntu22"
 	docker_dic['rockchip']['kirkstone']="ubuntu20"
 
 def print_usage():
